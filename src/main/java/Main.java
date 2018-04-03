@@ -1,6 +1,7 @@
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
@@ -18,17 +19,17 @@ public class Main {
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: ChildParents <in> [<in>...] <out>");
+            System.err.println("Usage: avg <in> [<in>...] <out>");
             System.exit(2);
         }
         /*执行类*/
-        Job job = Job.getInstance(conf, "ChildParents");
-        job.setJarByClass(ChildParents.class);
+        Job job = Job.getInstance(conf, "avg");
+        job.setJarByClass(avg.class);
         /*进行Mapreduce时使用*/
-        job.setMapperClass(ChildParents.Map.class);
-        job.setReducerClass(ChildParents.reduce.class);
+        job.setMapperClass(avg.Map.class);
+        job.setReducerClass(avg.reduce.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
         for (int i = 0; i < otherArgs.length - 1; ++i) {
             FileInputFormat.addInputPath(job, new Path (otherArgs[i]));
