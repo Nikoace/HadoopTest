@@ -1,4 +1,3 @@
-import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -11,8 +10,7 @@ import java.util.StringTokenizer;
 public class ChildParents{
     public static int time = 0;
     public static class Map extends Mapper<LongWritable, Text, Text, Text> {
-        protected void map(LongWritable key, Text value, Context context)
-                throws java.io.IOException, InterruptedException {
+        protected void map(LongWritable key, Text value, Context context) throws java.io.IOException, InterruptedException {
             // 左右表的标识
             int relation;
             StringTokenizer tokenizer = new StringTokenizer(value.toString());
@@ -22,19 +20,17 @@ public class ChildParents{
                 // 左表
                 relation = 1;
                 context.write(new Text(parent),
-                        new Text(relation + "+" + child));
+                        new Text(relation + "+" + child));//parent(key)->1+child(value)
                 // 右表
                 relation = 2;
                 context.write(new Text(child),
-                        new Text(relation + "+" + parent));
+                        new Text(relation + "+" + parent));//child->2+parent
             }
-        };
+        }
 
     }
     public static class reduce extends Reducer<Text, Text, Text, Text> {
-        protected void reduce(Text key, Iterable<Text> values,
-                              Reducer<Text, Text, Text, Text>.Context output)
-                throws java.io.IOException, InterruptedException {
+        protected void reduce(Text key, Iterable<Text> values, Context output) throws java.io.IOException, InterruptedException {
             int grandchildnum = 0;
             int grandparentnum = 0;
             List<String> grandchilds = new ArrayList<String> ();
@@ -45,7 +41,8 @@ public class ChildParents{
                 output.write(new Text("grandchild"), new Text("grandparent"));
                 time++;
             }
-            for (Text val : values) {
+            while (values.iterator ().hasNext ()){
+                Text val = values.iterator ().next ();
                 String record = val.toString();
                 char relation = record.charAt(0);
                 // 取出此时key所对应的child
