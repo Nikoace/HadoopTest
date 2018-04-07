@@ -14,7 +14,7 @@ public class Main {
         Configuration conf = new Configuration();
         /*删除之前生成的OutPut文件夹*/
         FileSystem hdfs= FileSystem.get(conf);
-        Path del = new Path ( "/output" );
+        Path del = new Path ( "/avg" );
         boolean isDel = hdfs.delete ( del,true );
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
