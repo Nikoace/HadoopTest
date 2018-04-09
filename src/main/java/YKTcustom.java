@@ -18,7 +18,9 @@ public class YKTcustom {
             String id = tokenizer.nextToken ();//学号
             String customType = tokenizer.nextToken ();//消费类型
             String customTypeName = tokenizer.nextToken ();
-            if (customType.equals ( "2032" )||customType.equals ( "2042" )){
+            if (customType.equals ( "2032" )||customType.equals ( "2033" )||customType.equals ( "2042" )||customType.equals ( "2054" )||
+                    customType.equals ( "2071" )||customType.equals ( "3032" )||customType.equals ( "3042" )||customType.equals ( "3054" )||
+                    customType.equals ( "3071" )){
                 if (!time.equals ( "NULL" )){
                     double customD = Double.parseDouble ( custom );
                     context.write ( new Text ( id + "\t" + time ), new DoubleWritable ( customD ) );
