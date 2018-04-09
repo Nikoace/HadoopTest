@@ -1,6 +1,7 @@
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.DoubleWritable;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -14,7 +15,7 @@ public class Main {
         Configuration conf = new Configuration();
         /*删除之前生成的OutPut文件夹*/
         FileSystem hdfs= FileSystem.get(conf);
-        Path del = new Path ( "/avg" );
+        Path del = new Path ( "/ykt" );
         boolean isDel = hdfs.delete ( del,true );
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
@@ -23,13 +24,13 @@ public class Main {
             System.exit(2);
         }
         /*执行类*/
-        Job job = Job.getInstance(conf, "avg");
-        job.setJarByClass(avg.class);
+        Job job = Job.getInstance(conf, "YKT");
+        job.setJarByClass(YKTcustom.class);
         /*进行Mapreduce时使用*/
-        job.setMapperClass(avg.Map.class);
-        job.setReducerClass(avg.reduce.class);
+        job.setMapperClass(YKTcustom.map.class);
+        job.setReducerClass(YKTcustom.reduce.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(IntWritable.class);
+        job.setOutputValueClass(DoubleWritable.class);
 
         for (int i = 0; i < otherArgs.length - 1; ++i) {
             FileInputFormat.addInputPath(job, new Path (otherArgs[i]));
