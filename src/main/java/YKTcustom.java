@@ -4,6 +4,7 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -16,10 +17,11 @@ public class YKTcustom {
             String custom = tokenizer.nextToken ();//消费额/充值额
             String id = tokenizer.nextToken ();//学号
             String customType = tokenizer.nextToken ();//消费类型
+            String customTypeName = tokenizer.nextToken ();
             if (customType.equals ( "2032" )||customType.equals ( "2042" )){
                 if (!time.equals ( "NULL" )){
                     double customD = Double.parseDouble ( custom );
-                    context.write ( new Text ( id + "+" + time ), new DoubleWritable ( customD ) );
+                    context.write ( new Text ( id + "\t" + time ), new DoubleWritable ( customD ) );
                 }
             }
         }
@@ -31,8 +33,11 @@ public class YKTcustom {
             Iterator<DoubleWritable> itr = values.iterator ();
             while (itr.hasNext ()){
                 sum += itr.next ().get ();
+
             }
-            context.write ( key, new DoubleWritable ( sum ) );
+            BigDecimal b = new BigDecimal ( sum );
+            Double sumBig = b.setScale ( 2, BigDecimal.ROUND_HALF_UP ).doubleValue ();
+            context.write ( key, new DoubleWritable ( sumBig ) );
         }
     }
 }
