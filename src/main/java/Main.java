@@ -15,22 +15,22 @@ public class Main {
         Configuration conf = new Configuration();
         /*删除之前生成的OutPut文件夹*/
         FileSystem hdfs= FileSystem.get(conf);
-        Path del = new Path ( "/ykt" );
+        Path del = new Path ( "/Lib" );
         boolean isDel = hdfs.delete ( del,true );
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: avg <in> [<in>...] <out>");
+            System.err.println("Usage: Lib <in> [<in>...] <out>");
             System.exit(2);
         }
         /*执行类*/
-        Job job = Job.getInstance(conf, "YKT");
-        job.setJarByClass(YKTcustom.class);
+        Job job = Job.getInstance(conf, "Lib");
+        job.setJarByClass(LibBrorrow.class);
         /*进行Mapreduce时使用*/
-        job.setMapperClass(YKTcustom.map.class);
-        job.setReducerClass(YKTcustom.reduce.class);
+        job.setMapperClass(LibBrorrow.map.class);
+        job.setReducerClass(LibBrorrow.reduce.class);
         job.setOutputKeyClass(Text.class);
-        job.setOutputValueClass(DoubleWritable.class);
+        job.setOutputValueClass(Text.class);
 
         for (int i = 0; i < otherArgs.length - 1; ++i) {
             FileInputFormat.addInputPath(job, new Path (otherArgs[i]));
