@@ -6,6 +6,8 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.util.GenericOptionsParser;
 
@@ -20,14 +22,16 @@ public class Main {
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
         if (otherArgs.length < 2) {
-            System.err.println("Usage: Lib <in> [<in>...] <out>");
+            System.err.println("Usage: test <in> [<in>...] <out>");
             System.exit(2);
         }
         /*执行类*/
-        Job job = Job.getInstance(conf, "Lib");
+        Job job = Job.getInstance(conf, "test");
         job.setJarByClass(LibBrorrow.class);
+//        MultipleInputs.addInputPath ( job,new Path ( otherArgs[0] ), TextInputFormat.class,LibBrorrow.BookMap.class );
+//        MultipleInputs.addInputPath ( job,new Path ( otherArgs[1] ),TextInputFormat.class,LibBrorrow.LibMap.class );
         /*进行Mapreduce时使用*/
-        job.setMapperClass(LibBrorrow.map.class);
+        job.setMapperClass(LibBrorrow.LibMap.class);
         job.setReducerClass(LibBrorrow.reduce.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);

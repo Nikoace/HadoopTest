@@ -33,7 +33,7 @@ public class door {
             Iterator<IntWritable> itr = values.iterator ();
             while (itr.hasNext ()){
                 int i = itr.next ().get ();
-                if (i > 90000 ){
+                if (i > 210000&& i<230000 ){
                     count_9+=1;
                 }
                 if (i > 230000){
