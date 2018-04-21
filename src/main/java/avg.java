@@ -15,10 +15,9 @@ public class avg {
                 String id = tokenizer.nextToken ();
                 String year = tokenizer.nextToken ();
                 String score = tokenizer.nextToken ();
-                // TODO: 2018/4/10  
                 if (score.compareTo ( "CJ" )!=0) {
                     int scoreInt = Integer.parseInt ( score );
-                    context.write ( new Text ( id + "+" + year ), new IntWritable ( scoreInt ) );
+                    context.write ( new Text ( id + "\t" + year ), new IntWritable ( scoreInt ) );
                 }
             }
         }

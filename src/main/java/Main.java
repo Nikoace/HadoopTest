@@ -17,7 +17,7 @@ public class Main {
         Configuration conf = new Configuration();
         /*删除之前生成的OutPut文件夹*/
         FileSystem hdfs= FileSystem.get(conf);
-        Path del = new Path ( "/Lib" );
+        Path del = new Path ( "/test" );
         boolean isDel = hdfs.delete ( del,true );
         /*验证hdfs路径（至少有两个）*/
         String[] otherArgs = new GenericOptionsParser (conf, args).getRemainingArgs();
@@ -27,12 +27,12 @@ public class Main {
         }
         /*执行类*/
         Job job = Job.getInstance(conf, "test");
-        job.setJarByClass(LibBrorrow.class);
+        job.setJarByClass(sukibook.class);
 //        MultipleInputs.addInputPath ( job,new Path ( otherArgs[0] ), TextInputFormat.class,LibBrorrow.BookMap.class );
 //        MultipleInputs.addInputPath ( job,new Path ( otherArgs[1] ),TextInputFormat.class,LibBrorrow.LibMap.class );
         /*进行Mapreduce时使用*/
-        job.setMapperClass(LibBrorrow.LibMap.class);
-        job.setReducerClass(LibBrorrow.reduce.class);
+        job.setMapperClass(sukibook.map.class);
+        job.setReducerClass(sukibook.reduce.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 

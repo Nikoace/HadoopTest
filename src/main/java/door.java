@@ -20,7 +20,7 @@ public class door {
                 String type = tokenizer.nextToken ();
                 String timeString = tokenizer.nextToken ();
                 int time = Integer.parseInt ( timeString );
-                context.write ( new Text ( id + "+" + type ), new IntWritable ( time ) );
+                context.write ( new Text ( id  ), new IntWritable ( time ) );
 
             }
         }
@@ -33,14 +33,13 @@ public class door {
             Iterator<IntWritable> itr = values.iterator ();
             while (itr.hasNext ()){
                 int i = itr.next ().get ();
-                if (i > 210000&& i<230000 ){
+                if (i >= 210000 && i<=230000 ){
                     count_9+=1;
-                }
-                if (i > 230000){
+                }else if (i > 230000 || i <30000 ){
                     count_23+=1;
                 }
             }
-            String count = count_9 + "+" + count_23;
+            String count = count_9 + "\t" + count_23;
             output.write ( key , new Text ( count ) );
         }
     }

@@ -15,8 +15,8 @@ public class book {
             if (line == null || line.equals ( "" )){
                 return;
             }
-            if (path.contains ( "Lib.txt" )){
-                String[] val = line.split ( "\t" );
+            if (path.contains ( "lib.txt" )){
+                String[] val = line.split ( "," );
                 if (val.length < 5){
                     return;
                 }
@@ -26,7 +26,7 @@ public class book {
                 String bookId = val[3];
                 String time = val[4];
                 if (type.equals ( "借书" )) {
-                    context.write ( new Text ( name + "\t" + id + "\t" + time.substring ( 0, 4 ) ), new Text ("a#" + bookId ) );
+                    context.write ( new Text ( bookId ), new Text ("a#" + name + "\t" + id + "\t" + time.substring ( 0, 4 ) ) );
                 }
             }else if (path.contains ( "bookList.txt" )){
                 String[] val = line.split ( "," );
@@ -37,7 +37,7 @@ public class book {
                 String bookListId = val[1];
                 String price = val[2];
                 String count = val[3];
-                context.write ( new Text(booktype), new Text ( "b#" + bookListId ) );
+                context.write ( new Text(bookListId), new Text ( "b#" + booktype ) );
             }
         }
     }
@@ -50,7 +50,7 @@ public class book {
                 if (val.toString ().startsWith ( "a#" )){
                     vA.add ( val.toString ().substring ( 2 ) );
                 }else if (val.toString ().startsWith ( "b#" )){
-                    vB.add ( key+","+val.toString ().substring ( 2 ));
+                    vB.add (val.toString ().substring ( 2 ));
                 }
             }
 
