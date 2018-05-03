@@ -1,3 +1,5 @@
+package prac;
+
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.Reducer;
@@ -15,7 +17,7 @@ public class mixup {
             if (line == null || line.equals ( "" )){
                 return;
             }
-            if (path.contains ( "avg" )){
+            if (path.contains ( "prac.avg" )){
                 String[] val = line.split ( "\t" );
                 if (val.length < 3){
                     return;
@@ -24,7 +26,7 @@ public class mixup {
                 String year = val[1];
                 String grade = val[2];
                 context.write ( new Text ( id + "\t"+ year),new Text ( "a#"+"\t"+grade ) );
-            }else if (path.contains ( "door" )){
+            }else if (path.contains ( "prac.door" )){
                 String[] val = line.split ( "\t" );
                 if (val.length < 3){
                     return;

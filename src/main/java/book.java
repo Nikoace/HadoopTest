@@ -35,8 +35,7 @@ public class book {
                 }
                 String booktype = val[0];
                 String bookListId = val[1];
-                String price = val[2];
-                String count = val[3];
+
                 context.write ( new Text(bookListId), new Text ( "b#" + booktype ) );
             }
         }
