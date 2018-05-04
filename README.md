@@ -1,6 +1,6 @@
 # HadoopTest
 
-https://travis-ci.org/Nikoace/HadoopTest.svg?branch=master
+![niko](https://travis-ci.org/Nikoace/HadoopTest.svg?branch=master)
 
 Hadoop Practice
 
