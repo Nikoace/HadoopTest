@@ -21,12 +21,10 @@ public class ChildParents{
             if (child.compareTo("C") != 0) {
                 // 左表
                 relation = 1;
-                context.write(new Text(parent),
-                        new Text(relation + "+" + child));//parent(key)->1+child(value)
+                context.write(new Text(parent), new Text(relation + "+" + child));//parent(key)->1+child(value)
                 // 右表
                 relation = 2;
-                context.write(new Text(child),
-                        new Text(relation + "+" + parent));//child->2+parent
+                context.write(new Text(child), new Text(relation + "+" + parent));//child->2+parent
             }
         }
 

@@ -16,7 +16,7 @@ public class Main {
         /*删除之前生成的OutPut文件夹*/
 
         FileSystem hdfs= FileSystem.get(conf);
-        Path del = new Path ( "/booknum" );
+        Path del = new Path ( "/rentbook" );
         boolean isDel = hdfs.delete ( del,true );
 
         /*验证hdfs路径（至少有两个）*/
@@ -28,10 +28,10 @@ public class Main {
         }
         /*执行类*/
         Job job = Job.getInstance(conf, "prac.avg");
-        job.setJarByClass( brorrowBook.class);
+        job.setJarByClass( prac.booksuit.class);
         /*进行Mapreduce时使用*/
-        job.setMapperClass(brorrowBook.map.class);
-        job.setReducerClass(brorrowBook.reduce.class);
+        job.setMapperClass(prac.booksuit.map.class);
+        job.setReducerClass(prac.booksuit.reduce.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
 

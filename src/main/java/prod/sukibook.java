@@ -45,7 +45,7 @@ public class sukibook {
             String maxType = null;
             String maxnum = null;
             ArrayList <String> arrayList = new ArrayList <String> ();
-            StringBuffer add = new StringBuffer ();
+            StringBuilder add = new StringBuilder ();
             Map <String, Integer> typeCount = new HashMap <String, Integer> ();
 
             if (time == 0) {
@@ -56,7 +56,7 @@ public class sukibook {
             for (Text val : values) {
                 String type = val.toString ();
                 if (typeCount.containsKey ( type )) {
-                    typeCount.put ( type, typeCount.get ( type ).intValue () + 1 );
+                    typeCount.put ( type, typeCount.get ( type ) + 1 );
                 } else {
                     typeCount.put ( type, 1 );
                 }
@@ -66,8 +66,7 @@ public class sukibook {
                 }
             }
 
-            List <Entry <String, Integer>> list = new ArrayList <Entry <String, Integer>> ();
-            list.addAll ( typeCount.entrySet () );
+            List <Entry <String, Integer>> list = new ArrayList <Entry <String, Integer>> ( typeCount.entrySet () );
             Collections.sort ( list, new Comparator <Entry <String, Integer>> () {
                 @Override
                 public int compare(Entry <String, Integer> o1, Entry <String, Integer> o2) {
@@ -82,8 +81,8 @@ public class sukibook {
                 maxnum = entry.getValue ().toString ();
             }
 
-            for (int i = 0; i < arrayList.size (); i++) {
-                add.append ( arrayList.get ( i ) + "/" );
+            for (String anArrayList : arrayList) {
+                add.append ( anArrayList ).append ( "/" );
             }
             String all = add.toString ();
             output.write ( key, new Text ( maxType + "\t" + maxnum + "\t" + all ) );
