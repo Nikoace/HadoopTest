@@ -19,7 +19,6 @@ public class sukibook {
             String line = value.toString ();
             String[] val = line.split ( "\t" );
             Pattern p = Pattern.compile ( "[a-zA-Z]" );
-
             //
             if (val.length < 5) {
                 return;
@@ -29,12 +28,10 @@ public class sukibook {
             String bookType = val[2];
             String opType = val[3];
             String time = val[4];
-            if (time.equals ( "2017" ) && opType.equals ( "借书册数" ) && !p.matcher ( id ).find ()) {
-                if (bookType != null && !bookType.equals ( "/" ) && !bookType.equals ( "]" ) && !bookType.equals ( "]" )
-                        && !bookType.equals ( "0" ) && !bookType.equals ( "2" ) && !bookType.equals ( "3" )
-                        && !bookType.equals ( "保" )) {
-                    context.write ( new Text ( id + "\t" + name ), new Text ( bookType ) );
-                }
+            if (time.equals ( "2017" ) && opType.equals ( "借书册数" ) && !p.matcher ( id ).find () && bookType != null && !bookType.equals ( "/" ) && !bookType.equals ( "]" ) && !bookType.equals ( "]" )
+                    && !bookType.equals ( "0" ) && !bookType.equals ( "2" ) && !bookType.equals ( "3" )
+                    && !bookType.equals ( "保" )) {
+                context.write ( new Text ( id + "\t" + name ), new Text ( bookType ) );
             }
         }
     }
